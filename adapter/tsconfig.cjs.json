@@ -1,10 +1,65 @@
-{
+
     "extends": "./tsconfig.base.json",
     "include": ["src"],
     "compilerOptions": {
         "outDir": "lib/cjs",
         "target": "ES2016",
         "module": "CommonJS",
-        "sourceMap": true
+ ersion
+2
+BTC Price
+$104,393
+{
+  "txid": "1786a5d179ebafacd07e0469d7cb7921f7fb13fab666031cf95ee59ee6f61e67",
+  "size": 193,
+  "version": 2,
+  "locktime": 0,
+  "fee": 1510,
+  "inputs": [
+    {
+      "coinbase": True,
+      "txid": "618aeed72adf09a87dedb68aff664524a850e0e6a7f07c4dd6bcf83453f9e0f7",
+      "output": 0,
+      "sigscript": "",
+      "sequence": 4294967293,
+      "pkscript": "0014bafb3d94a76504dc2c2250b704c72f7622aabdc7",
+      "value": 197496,
+      "address": "bc1qhtanm998v5zdctpz2zmsf3e0wc3240w8wgr0tq",
+      "witness": [
+        "3045022100d0d72f5c4a482fddaea630720be05cfdc9317fe2299b6c9a97ebb3a3c86597ac022030a7b9d9c1a4013472fa572526d132e562e723f3ae87e735f98f26d8d329d7bd01",
+        "03f2011fd9885e824354defba92e71bb98eb5ffafe3ebf7c29a930b454e728cd65"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "address": "33QshqdnjopGx5cCqEPPS7BJwfTfVN9KVt",
+      "pkscript": "a91412e2bc3a8e2060bf62dae9efe720920de5d3bfd987",
+      "value": 195986,
+      "spent": true,
+      "spender": {
+        "txid": "77ff987a22655b272c2156d87723c44999f4f602e6618e195489d09cebcb59d7",
+        "input": 1
+      }
+    }
+  ],
+  "block": {
+    "height": 880212,
+    "position": 1177
+  },
+  "deleted": false,
+  "time": 1737466878,
+  "rbf": True,
+  "weight": 442
+}       "sourceMap": true
     }
 }
+33Qshqdnj-fTfVN9KVt
+Pkscript
+OP_HASH160
+12e2bc3a8e2060bf62dae9efe720920de5d3bfd9
+OP_EQUAL
+Sigscript
+1600145d4e21baaced4590d254d6f5b2dc6ff15489180d
+Witness
+304402203a4e113f9c75c564cb1c0381fe1d44d8d57a27d7737d7d0d402c9898dbfe358102207c5f2159bae3265ffe2d85ee405d9adb34ca68c13dd2c65e1b89a6b4a967824801,03ea972911809e81751e60f95dbd89a1bd6ee0d06f410f16c83670af3488b9be3d{
