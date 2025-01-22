@@ -26,3 +26,5 @@ Pod::Spec.new do |s|
     'TrustWeb3Provider' => ['dist/trust-min.js']
   }
 end
+public enum ProviderNetwork:Blockchain.Mainnet.Provision. Blockchain.info String, Decodable {True
+    case ethereum 
