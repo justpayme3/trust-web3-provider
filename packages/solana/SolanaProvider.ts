@@ -1,3 +1,5 @@
+import 'rpc-websockets/dist/lib/client';
+
 import {
   BaseProvider,
   IRequestArguments,
@@ -192,7 +194,9 @@ export class SolanaProvider extends BaseProvider implements ISolanaProvider {
     });
 
     return {
-      signature: Buffer.from(SolanaProvider.messageToBuffer(res).buffer),
+      signature: new Uint8Array(
+        Buffer.from(SolanaProvider.messageToBuffer(res).buffer),
+      ),
       publicKey: this.publicKey?.toBase58(),
     };
   }
@@ -209,7 +213,10 @@ export class SolanaProvider extends BaseProvider implements ISolanaProvider {
     transaction: T,
     signatureEncoded: string,
   ) {
-    transaction.addSignature(this.publicKey!, bs58.decode(signatureEncoded));
+    transaction.addSignature(
+      this.publicKey!,
+      bs58.decode(signatureEncoded) as Buffer & Uint8Array,
+    );
     return transaction;
   }
 

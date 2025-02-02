@@ -111,7 +111,7 @@ export class CosmosProvider extends BaseProvider implements ICosmosProvider {
     chainId: string,
     tx: Uint8Array,
     mode: BroadcastMode,
-  ): Promise<Uint8Array> {
+  ): Promise<Uint8Array | Buffer> {
     const raw = Buffer.from(tx).toString('base64');
 
     const hash = await this.request<string>({
@@ -123,7 +123,7 @@ export class CosmosProvider extends BaseProvider implements ICosmosProvider {
       },
     });
 
-    return Buffer.from(hash, 'hex');
+    return new Uint8Array(Buffer.from(hash, 'hex'));
   }
 
   async signArbitrary(

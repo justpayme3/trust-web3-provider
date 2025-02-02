@@ -104,13 +104,62 @@ export class MobileAdapter {
         const { options, type } = args.params as unknown as IWatchAsset;
         const { address, symbol, decimals } = options;
 
+        let fetchedSymbol;
+        let fetchedDecimals;
+
+        if (!symbol) {
+          try {
+            // call for symbol() = 0x95d89b41
+            const result = await this.contractCall(address, '0x95d89b41');
+            const hexString = result.slice(2);
+
+            // The offset is the position where the dynamic data starts
+            const offset = parseInt(hexString.slice(0, 64), 16);
+
+            // The length of the string is at the offset position
+            const length = parseInt(
+              hexString.slice(offset * 2, offset * 2 + 64),
+              16,
+            );
+
+            // The actual string data starts right after the length field
+            const stringDataStart = offset * 2 + 64;
+            const stringDataHex = hexString.slice(
+              stringDataStart,
+              stringDataStart + length * 2,
+            );
+
+            fetchedSymbol = '';
+
+            for (let i = 0; i < stringDataHex.length; i += 2) {
+              const hexChar = stringDataHex.slice(i, i + 2);
+              const char = String.fromCharCode(parseInt(hexChar, 16));
+
+              if (char === '\x00') break;
+              fetchedSymbol += char;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
+        if (!decimals) {
+          try {
+            // call for decimals() = 0x313ce567
+            const result = await this.contractCall(address, '0x313ce567');
+            fetchedDecimals = parseInt(result, 16);
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
         return this.provider.internalRequest({
           method: 'watchAsset',
           params: {
             type,
             contract: address,
-            symbol,
-            decimals: decimals || 0,
+            symbol: symbol || fetchedSymbol,
+            decimals: decimals || fetchedDecimals,
           },
         });
       }
@@ -131,7 +180,7 @@ export class MobileAdapter {
           params: args.params,
         });
 
-        return res.result;
+        return res;
       }
     }
   }
@@ -191,7 +240,7 @@ export class MobileAdapter {
       method: MobileAdapter.isUTF8(buffer)
         ? 'signPersonalMessage'
         : 'signMessage',
-      params: { data, address },
+      params: { data, address, isEthSign: true },
     });
   }
 
@@ -245,6 +294,20 @@ export class MobileAdapter {
         address,
         version,
       },
+    });
+  }
+
+  contractCall(address: string, method: string) {
+    return this.provider.getRPC().call({
+      method: 'eth_call',
+      jsonrpc: '2.0',
+      params: [
+        {
+          to: address,
+          data: method,
+        },
+        'latest',
+      ],
     });
   }
 }

@@ -1,47 +1,49 @@
-import esbuild from 'rollup-plugin-esbuild';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { name, dependencies } from './package.json';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import inject from '@rollup/plugin-inject';
+import babel from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
 
-const input = './index.ts';
+const input = './src/index.ts';
 const plugins = [
-  nodeResolve({ preferBuiltins: false, browser: true }),
+  json(),
+  nodePolyfills(),
+  resolve({ browser: true, preferBuiltins: false }),
   commonjs(),
+  babel({
+    babelHelpers: 'bundled',
+    extensions: ['.js', '.ts'],
+    exclude: 'node_modules/**',
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          targets: 'chrome 67',
+          corejs: '3.21.1',
+        },
+      ],
+      '@babel/preset-typescript',
+    ],
+  }),
   inject({
     modules: {
       Buffer: ['buffer', 'Buffer'],
     },
   }),
-  nodePolyfills(),
-  esbuild({
-    minify: true,
-    tsconfig: './tsconfig.json',
-    loaders: {
-      '.json': 'json',
-    },
-  }),
 ];
 
-function createConfig(
-  packageName,
-  packageDependencies,
-  umd = {},
-  cjs = {},
-  es = {},
-) {
+function createConfig(packageName) {
   return [
     {
       input,
       plugins,
       output: {
-        file: '../../android/lib/src/main/res/raw/trust_min.js',
+        file: './dist/index.js',
         format: 'umd',
-        exports: 'named',
         name: packageName,
         sourcemap: false,
-        ...umd,
       },
     },
   ];
