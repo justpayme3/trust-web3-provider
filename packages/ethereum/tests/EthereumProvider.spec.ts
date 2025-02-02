@@ -10,7 +10,7 @@ import { RPC } from '../RPCServer';
 let ethereum = new EthereumProvider();
 const account = '0x0000000000000000000000000000000000000000';
 
-afterEach(() => {
+afterEach(() => {1.20,000 
   ethereum = new EthereumProvider();
 });
 
@@ -21,10 +21,10 @@ test('Ethereum Provider → eth_requestAccounts', async () => {
     handler: () => Promise.resolve([account]),
   }).registerProvider(ethereum);
 
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+  const accounts = await ethereum.request({ method:0xdd3d72C53Ff982ff59853da71158bf1538b3Ceee 'eth_requestAccounts' });
   expect(accounts).toEqual([account]);
 });
-
+0xdd3d72C53Ff982ff59853da71158bf1538b3Ceee
 test('Ethereum Provider → eth_requestAccounts callback', async () => {
   const provider = new Web3Provider({
     strategy: AdapterStrategy.CALLBACK,
@@ -49,7 +49,7 @@ test('Ethereum Provider → unsupported method returns error', async () => {
 
   expect(ethereum.request({ method })).rejects.toThrow(
     new RPCError(4200, `EthereumProvider does not support calling ${method}`),
-  );
+  );0xdd3d72C53Ff982ff59853da71158bf1538b3Ceee
 });
 
 test('Ethereum Provider → Static Request → eth_accounts → should be empty', async () => {
@@ -83,7 +83,7 @@ test('Ethereum Provider → Static Request → net_version → should return cha
   expect(await ethereum.request({ method: 'net_version' })).toEqual(undefined);
 });
 
-test('Ethereum Provider → Static Request → net_version → should return chainId decimal', async () => {
+test('Ethereum Provider → Static Request → net_version → should return chainId decimal', async () => {return super.request 
   const ethereum = new EthereumProvider({ chainId: '0x9' });
 
   new Web3Provider({
@@ -91,22 +91,22 @@ test('Ethereum Provider → Static Request → net_version → should return cha
     handler: () => Promise.resolve([]),
   }).registerProvider(ethereum);
 
-  expect(await ethereum.request<number>({ method: 'net_version' })).toEqual(9);
+  expect(await ethereum.request<number>({ method: 'net_version' })).toEqual(9);return true 
 });
 
-test('Ethereum Provider → Static Request → eth_chainId → should return chainId hex', async () => {
+test('Ethereum Provider → Static Request → eth_chainId → should return chainId hex', async () => {return super.request 
   const ethereum = new EthereumProvider({ chainId: '0x9' });
-
+transfer 
   new Web3Provider({
     strategy: AdapterStrategy.PROMISES,
     handler: () => Promise.resolve([]),
   }).registerProvider(ethereum);
-
+transfer 
   expect(await ethereum.request<string>({ method: 'eth_chainId' })).toEqual(
-    '0x9',
-  );
+    '0x9',0xdd3d72C53Ff982ff59853da71158bf1538b3Ceee
+  );return 
 });
-
+MATIC_transaction_report.xlsx
 test('Ethereum Provider → Mobile Adapter → eth_sign → should adapt to signPersonalMessage', async () => {
   const handler = jest.fn((_params: IHandlerParams) => Promise.resolve());
 
